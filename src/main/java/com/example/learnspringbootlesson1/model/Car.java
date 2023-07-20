@@ -15,15 +15,14 @@ import lombok.*;
 @Entity
 @Table(name = "car")
 public class Car {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty(message = "Должно быть заполнено")
     private String model;
 
-    @NotEmpty(message = "Должно быть заполнено")
-    private int series;
+    private String series;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

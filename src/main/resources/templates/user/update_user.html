@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Обновление человека</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css" />
 </head>
 <body>
+<br>
+<br>
+<h4>Обновить данные человека</h4>
+<br>
+<br>
 <form th:method="PATCH" th:action="@{/user/{id}(id=${user.getId()})}" th:object="${user}">
     <label for="firstName">Имя</label>
     <input type="text" th:field="*{firstName}" id="firstName"/>

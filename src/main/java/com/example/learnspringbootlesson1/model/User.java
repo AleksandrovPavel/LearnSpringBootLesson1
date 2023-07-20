@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import java.util.List;
+import java.util.Set;
 
 
 @AllArgsConstructor
@@ -24,18 +25,14 @@ public class User {
     private Long id;
 
     @Column(name = "first_name")
-    @NotEmpty(message = "Должно быть заполнено")
     private String firstName;
 
     @Column(name = "last_name")
-    @NotEmpty(message = "Должно быть заполнено")
     private String lastName;
 
-    @NotEmpty(message = "Должно быть заполнено")
-    @Email
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.DETACH, orphanRemoval = true)
-    private List<Car> cars;
+    private Set<Car> cars;
 }
 

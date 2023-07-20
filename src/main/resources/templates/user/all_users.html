@@ -3,19 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Все люди</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css" />
 </head>
 
 <body>
-
-<div th:each="all_users : ${users}">
-    <a th:href="@{/user/{id}(id=${all_users.getId()})}"
-       th:text="${all_users.getLastName() + ', ' + all_users.getFirstName()}">user</a>
+<br>
+<a href="/car">Ко всем автомобилям</a>
+<br>
+<br>
+<h4>Список людей</h4>
+<br>
+<br>
+<div>
+    <table>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Перейти</th>
+            <th>Удалить</th>
+        </tr>
+        <tr th:each="all_users : ${users}">
+            <td th:utext="${all_users.firstName}">Имя</td>
+            <td th:utext="${all_users.getLastName}">Фамилия</td>
+            <td><a th:href="'/user/' + ${all_users.getId()}">Перейти</a></td>
+            <td><a th:href="'/user/' + ${all_users.getId()} + '/delete_user'">Удалить</a></td>
+        </tr>
+    </table>
 </div>
 
 <br/>
 <hr/>
 
-<a href="/user/new">Сохранить нового человека</a>
+<a href="/user/new_user">Сохранить нового человека</a>
 
 </body>
 </html>

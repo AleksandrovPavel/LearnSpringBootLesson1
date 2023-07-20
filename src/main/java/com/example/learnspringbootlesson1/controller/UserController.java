@@ -1,7 +1,8 @@
 package com.example.learnspringbootlesson1.controller;
 
-import com.example.learnspringbootlesson1.model.User;
-import com.example.learnspringbootlesson1.service.UserServiceImpl;
+import com.example.learnspringbootlesson1.dto.CarDto;
+import com.example.learnspringbootlesson1.dto.UserDto;
+import com.example.learnspringbootlesson1.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -26,46 +27,64 @@ public class UserController {
         return "user/all_users";
     }
 
-    @GetMapping("/{id}")
-    public String getUserById(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
+    @GetMapping("/{user-id}")
+    public String getUserById(@PathVariable("user-id") long userId,
+                              @ModelAttribute("new_car") CarDto carDto,
+                              Model model) {
+        model.addAttribute("user", userService.getUserById(userId));
+        model.addAttribute("car", userService.getInUserCars(userId));
         return "user/user_by_id";
     }
 
-    @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
-        return "user/new";
+    @PostMapping("/{user-id}/new_car_to_user")
+    public String newCarToUser(@PathVariable("user-id") Long userId,
+                               @ModelAttribute("new_car") @Valid CarDto carDto,
+                               BindingResult bindingResult, Model model) {
+        model.addAttribute("user", userService.getUserById(userId));
+        model.addAttribute("car", userService.getInUserCars(userId));
+        if (bindingResult.hasErrors()) {
+            return "user/user_by_id";
+        }
+        userService.saveCarToUser(userId, carDto);
+        return "redirect:/user/" + userId;
     }
 
-    @PostMapping()
-    public String saveUser(@ModelAttribute("user") @Valid User user,
+    @GetMapping("/new_user")
+    public String newUser(@ModelAttribute("user") UserDto userDto) {
+        return "user/new_user";
+    }
+
+    @PostMapping("/save_User")
+    public String saveUser(@ModelAttribute("user") @Valid UserDto userDto,
                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "user/new";
+            return "user/new_user";
         }
-        userService.saveUser(user);
+        userService.saveUser(userDto);
         return "redirect:/user";
     }
 
-    @GetMapping("/{id}/update")
-    public String edit(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "user/update";
+    @GetMapping("/{user-id}/update_user")
+    public String edit(@PathVariable("user-id") long userId, Model model) {
+        model.addAttribute("user", userService.getUserById(userId));
+        return "user/update_user";
     }
 
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                         @PathVariable("id") long id) {
+    @PatchMapping("/{user-id}")
+    public String update(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult,
+                         @PathVariable("user-id") Long userId) {
         if (bindingResult.hasErrors()) {
-            return "user/update";
+            return "user/update_user";
         }
-        userService.updateUser(id, user);
+        userService.updateUser(userId, userDto);
+        return "redirect:/user/" + userId;
+    }
+
+    @GetMapping("/{user-id}/delete_user")
+    public String delete(@PathVariable("user-id") Long carId) {
+        userService.deleteUser(carId);
         return "redirect:/user";
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") long id) {
-        userService.deleteUser(id);
-        return "redirect:/user";
-    }
+
 }

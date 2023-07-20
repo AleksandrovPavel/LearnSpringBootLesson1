@@ -27,7 +27,7 @@ public class CarController {
     }
 
     @GetMapping("/{car-id}")
-    public String getCarById(@PathVariable("car-id") long carId, Model model) {
+    public String getCarById(@PathVariable("car-id") Long carId, Model model) {
         model.addAttribute("car", carService.getCarById(carId));
         return "car/car_by_id";
     }
@@ -58,7 +58,7 @@ public class CarController {
         return "redirect:/user/" + carId;
     }
     @GetMapping("/{car-id}/delete_car")
-    public String delete(@PathVariable("car-id") long carId) {
+    public String delete(@PathVariable("car-id") Long carId) {
         long number = carService.idUser(carId);
         carService.deleteCar(carId);
         return "redirect:/user/" + number;

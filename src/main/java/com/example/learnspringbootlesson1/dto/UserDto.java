@@ -13,8 +13,6 @@ import lombok.Setter;
 @Getter
 public class UserDto {
 
-    private Long id;
-
     @NotEmpty(message = "Должно быть заполнено")
     private String firstName;
 

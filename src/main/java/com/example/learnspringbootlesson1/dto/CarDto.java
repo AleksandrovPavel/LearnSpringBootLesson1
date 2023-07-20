@@ -12,7 +12,6 @@ import lombok.Getter;
 @Getter
 public class CarDto {
 
-    private Long id;
 
     @NotEmpty(message = "Должно быть заполнено")
     private String model;

@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{user-id}")
-    public String getUserById(@PathVariable("user-id") long userId,
+    public String getUserById(@PathVariable("user-id") Long userId,
                               @ModelAttribute("new_car") CarDto carDto,
                               Model model) {
         model.addAttribute("user", userService.getUserById(userId));
@@ -64,14 +64,15 @@ public class UserController {
         return "redirect:/user";
     }
 
-    @GetMapping("/{user-id}/update_user")
+    @GetMapping("/{user-id}/update")
     public String edit(@PathVariable("user-id") long userId, Model model) {
         model.addAttribute("user", userService.getUserById(userId));
         return "user/update_user";
     }
 
-    @PatchMapping("/{user-id}")
-    public String update(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult,
+    @PatchMapping("/{user-id}/user_update")
+    public String update(@ModelAttribute("update_user") @Valid UserDto userDto,
+                         BindingResult bindingResult,
                          @PathVariable("user-id") Long userId) {
         if (bindingResult.hasErrors()) {
             return "user/update_user";

@@ -11,7 +11,7 @@
 <h4>Обновить данные человека</h4>
 <br>
 <br>
-<form th:method="PATCH" th:action="@{/user/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="PATCH" th:action="@{/user/{id}/user_update(id=${user.getId()})}" th:object="${user}">
     <label for="firstName">Имя</label>
     <input type="text" th:field="*{firstName}" id="firstName"/>
     <div style="color:red"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name error</div>

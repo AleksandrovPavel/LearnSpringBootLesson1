@@ -17,7 +17,7 @@
 <p th:text="${'Фамилия: ' + user.getLastName()}">VALUE</p>
 <p th:text="${'Email: ' + user.getEmail()}">VALUE</p>
 <br/>
-<a th:href="@{/user/{id}/update_user(id=${user.getId()})}">Изменить</a>
+<a th:href="@{/user/{id}/update(id=${user.getId()})}">Изменить</a>
 <br/>
 <br>
 <h4>Автомобили человека</h4>

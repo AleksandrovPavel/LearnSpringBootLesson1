@@ -1,15 +1,14 @@
 package com.example.learnspringbootlesson1.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.Getter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
+@EqualsAndHashCode
+@ToString
 public class CarDto {
 
 

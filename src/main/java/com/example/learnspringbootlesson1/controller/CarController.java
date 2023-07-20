@@ -45,22 +45,25 @@ public class CarController {
         return "car/update_car";
     }
 
-    @PatchMapping("/{car-id}/car_update")
-    public String update(@ModelAttribute("update_car") @Valid CarDto carDto,
-                         BindingResult bindingResult,
-                         @PathVariable("car-id") Long carId) {
+    @PostMapping("/{car-id}/car_update")
+    public String update( @PathVariable("car-id") Long carId,
+                          @ModelAttribute("update_car") @Valid CarDto carDto,
+                         BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "car/update_car";
         }
-
+        long number = carService.idUser(carId);
         carService.updateCar(carId, carDto);
-        return "redirect:/user/" + carId;
+
+        return "redirect:/user/" + number;
     }
+
     @GetMapping("/{car-id}/delete_car")
     public String delete(@PathVariable("car-id") Long carId) {
         long number = carService.idUser(carId);
         carService.deleteCar(carId);
+
         return "redirect:/user/" + number;
     }
 
